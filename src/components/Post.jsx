@@ -1,10 +1,8 @@
-export default function Post() {
-  const names = ["matheus", "carol"];
-  const name = names[Math.floor(Math.random() * names.length)];
+export default function Post(props) {
   return (
     <div>
-      <p>{name}</p>
-      <p>React.js is awesome</p>
+      <p>{props.author}</p>
+      <p>{props.body}</p>
     </div>
   );
 }
