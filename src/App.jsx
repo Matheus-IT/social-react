@@ -1,11 +1,15 @@
 import "./App.css";
-import Post from "./components/Post";
+import PostList from "./components/PostList";
 
 function App() {
   return (
     <>
-      <Post author="Matheus" body="First post" />
-      <Post author="Carol" body="Second post" />
+      <PostList
+        posts={[
+          { author: "matheus", body: "first post" },
+          { author: "carol", body: "second post" },
+        ]}
+      />
     </>
   );
 }
