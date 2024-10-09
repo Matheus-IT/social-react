@@ -21,7 +21,7 @@ export default function App() {
   }
 
   function addPostHandler(post) {
-    setPosts([post, ...posts]);
+    setPosts((existingPosts) => [post, ...existingPosts]);
   }
 
   return (
