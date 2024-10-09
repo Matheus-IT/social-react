@@ -6,17 +6,7 @@ import Modal from "./components/Modal";
 import MainHeader from "./components/MainHeader";
 
 export default function App() {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
   const [isNewPostModalVisible, setIsNewPostModalVisible] = useState(false);
-
-  function changeBodyHandler(event) {
-    setEnteredBody(event.target.value);
-  }
-
-  function changeAuthorHandler(event) {
-    setEnteredAuthor(event.target.value);
-  }
 
   function hideNewPostModalHandler() {
     setIsNewPostModalVisible(false);
@@ -34,16 +24,11 @@ export default function App() {
         isVisible={isNewPostModalVisible}
         onHideNewPostModal={hideNewPostModalHandler}
       >
-        <NewPost
-          onChangeBody={changeBodyHandler}
-          onChangeAuthor={changeAuthorHandler}
-          onCancel={hideNewPostModalHandler}
-        />
+        <NewPost onCancel={hideNewPostModalHandler} />
       </Modal>
 
       <PostList
         posts={[
-          { author: enteredAuthor, body: enteredBody },
           { author: "matheus", body: "first post" },
           { author: "carol", body: "second post" },
         ]}
