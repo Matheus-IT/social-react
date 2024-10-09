@@ -13,8 +13,22 @@ export default function NewPost(props) {
     setEnteredAuthor(event.target.value);
   }
 
+  function submitHandler(event) {
+    event.preventDefault();
+
+    const payload = {
+      body: enteredBody,
+      author: enteredAuthor,
+    };
+
+    console.log(`${payload.body}, ${payload.author}`);
+
+    props.onHideModal();
+    props.onAddPost(payload);
+  }
+
   return (
-    <form className={cls.form}>
+    <form className={cls.form} onSubmit={submitHandler}>
       <p>
         <label htmlFor="body">Text</label>
         <textarea
@@ -38,7 +52,7 @@ export default function NewPost(props) {
         />
       </p>
       <p className={cls.actions}>
-        <button type="button" onClick={props.onCancel}>
+        <button type="button" onClick={props.onHideModal}>
           Cancel
         </button>
         <button>Submit</button>

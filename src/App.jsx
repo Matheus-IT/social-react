@@ -7,6 +7,10 @@ import MainHeader from "./components/MainHeader";
 
 export default function App() {
   const [isNewPostModalVisible, setIsNewPostModalVisible] = useState(false);
+  const [posts, setPosts] = useState([
+    { author: "matheus", body: "first post" },
+    { author: "carol", body: "second post" },
+  ]);
 
   function hideNewPostModalHandler() {
     setIsNewPostModalVisible(false);
@@ -14,6 +18,10 @@ export default function App() {
 
   function showNewPostModalHandler() {
     setIsNewPostModalVisible(true);
+  }
+
+  function addPostHandler(post) {
+    setPosts([post, ...posts]);
   }
 
   return (
@@ -24,15 +32,13 @@ export default function App() {
         isVisible={isNewPostModalVisible}
         onHideNewPostModal={hideNewPostModalHandler}
       >
-        <NewPost onCancel={hideNewPostModalHandler} />
+        <NewPost
+          onHideModal={hideNewPostModalHandler}
+          onAddPost={addPostHandler}
+        />
       </Modal>
 
-      <PostList
-        posts={[
-          { author: "matheus", body: "first post" },
-          { author: "carol", body: "second post" },
-        ]}
-      />
+      <PostList posts={posts} />
     </>
   );
 }
