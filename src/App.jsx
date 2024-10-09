@@ -37,6 +37,7 @@ export default function App() {
         <NewPost
           onChangeBody={changeBodyHandler}
           onChangeAuthor={changeAuthorHandler}
+          onCancel={hideNewPostModalHandler}
         />
       </Modal>
 
