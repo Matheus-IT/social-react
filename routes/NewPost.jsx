@@ -1,37 +1,12 @@
-import { useState } from "react";
 import cls from "./NewPost.module.css";
-import HttpClient from "../src/http";
 import PageModal from "../src/components/Modal";
-import { Link } from "react-router-dom";
+import { Form, Link, redirect } from "react-router-dom";
+import HttpClient from "../src/http";
 
 export default function NewPost() {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
-
-  function changeBodyHandler(event) {
-    setEnteredBody(event.target.value);
-  }
-
-  function changeAuthorHandler(event) {
-    setEnteredAuthor(event.target.value);
-  }
-
-  function submitHandler(event) {
-    event.preventDefault();
-
-    const payload = {
-      body: enteredBody,
-      author: enteredAuthor,
-    };
-
-    console.log(`${payload.body}, ${payload.author}`);
-
-    HttpClient.post("posts/", payload);
-  }
-
   return (
     <PageModal isVisible>
-      <form className={cls.form} onSubmit={submitHandler}>
+      <Form method="post" className={cls.form}>
         <p>
           <label htmlFor="body">Text</label>
           <textarea
@@ -39,8 +14,7 @@ export default function NewPost() {
             required
             rows={3}
             placeholder="Enter some text here..."
-            onChange={changeBodyHandler}
-            defaultValue={enteredBody}
+            name="body"
           />
         </p>
         <p>
@@ -50,8 +24,7 @@ export default function NewPost() {
             id="name"
             required
             placeholder="Enter your name here..."
-            onChange={changeAuthorHandler}
-            defaultValue={enteredAuthor}
+            name="author"
           />
         </p>
         <p className={cls.actions}>
@@ -60,7 +33,14 @@ export default function NewPost() {
           </Link>
           <button>Submit</button>
         </p>
-      </form>
+      </Form>
     </PageModal>
   );
+}
+
+export async function action(data) {
+  const formData = await data.request.formData();
+  const postData = Object.fromEntries(formData);
+  await HttpClient.post("posts/", postData);
+  return redirect("/");
 }
