@@ -1,5 +1,6 @@
 import { useState } from "react";
 import cls from "./NewPost.module.css";
+import HttpClient from "../http";
 
 export default function NewPost(props) {
   const [enteredBody, setEnteredBody] = useState("");
@@ -22,6 +23,8 @@ export default function NewPost(props) {
     };
 
     console.log(`${payload.body}, ${payload.author}`);
+
+    HttpClient.post(payload);
 
     props.onHideModal();
     props.onAddPost(payload);
