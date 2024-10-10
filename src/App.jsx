@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import NewPost from "./components/NewPost";
 import PostList from "./components/PostList";
 import Modal from "./components/Modal";
 import MainHeader from "./components/MainHeader";
+import HttpClient from "./http";
 
 export default function App() {
   const [isNewPostModalVisible, setIsNewPostModalVisible] = useState(false);
-  const [posts, setPosts] = useState([
-    { author: "matheus", body: "first post" },
-    { author: "carol", body: "second post" },
-  ]);
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    HttpClient.get("posts/").then((responseData) => {
+      setPosts(responseData.posts);
+      setIsLoading(false);
+    });
+  }, []);
 
   function hideNewPostModalHandler() {
     setIsNewPostModalVisible(false);
@@ -38,7 +46,7 @@ export default function App() {
         />
       </Modal>
 
-      <PostList posts={posts} />
+      <PostList posts={posts} isLoadingList={isLoading} />
     </>
   );
 }

@@ -1,14 +1,23 @@
 export default class HttpClient {
-  static async post(payload) {
-    const res = await fetch('http://localhost:8080/posts', {
+  static host = 'http://localhost:8080/';
+
+  static async post(uri, payload) {
+    const res = await fetch(`${this.host}${uri}`, {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    const resData = await res.json();
+    console.log('Response', resData);
+    return resData;
+  }
 
-    console.log('Response', res);
-
+  static async get(uri) {
+    const res = await fetch(`${this.host}${uri}`);
+    const resData = await res.json();
+    console.log('Response', resData);
+    return resData;
   }
 }

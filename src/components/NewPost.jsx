@@ -24,7 +24,7 @@ export default function NewPost(props) {
 
     console.log(`${payload.body}, ${payload.author}`);
 
-    HttpClient.post(payload);
+    HttpClient.post("posts/", payload);
 
     props.onHideModal();
     props.onAddPost(payload);
